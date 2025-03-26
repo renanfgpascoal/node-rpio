@@ -1900,10 +1900,13 @@ int bcm2835_init(int gpiomem)
       /* Not root, try /dev/gpiomem */
       /* Open the master /dev/mem device */
       if ((memfd = open("/dev/gpiomem", O_RDWR | O_SYNC) ) < 0) 
+      	if ((memfd = open("/dev/gpiomem0", O_RDWR | O_SYNC) ) < 0) 
 	{
-	  fprintf(stderr, "bcm2835_init: Unable to open /dev/gpiomem: %s\n",
-		  strerror(errno)) ;
-	  goto exit;
+		{
+		  fprintf(stderr, "bcm2835_init: Unable to open /dev/gpiomem: %s\n",
+			  strerror(errno)) ;
+		  goto exit;
+		}
 	}
       
       /* Base of the peripherals block is mapped to VM */
